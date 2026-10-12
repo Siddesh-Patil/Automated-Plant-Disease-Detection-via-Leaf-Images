@@ -1,318 +1,273 @@
-# 🌾 KisanCare - Smart Agriculture Assistant Platform
+# 🌿 Automated Plant Disease Detection via Leaf Images
 
-A comprehensive Flask-based intelligent agriculture platform designed to help Indian farmers with crop disease detection, weather analysis, crop recommendations, fertilizer suggestions, government schemes, and market prices.
+An AI-powered web application that detects plant diseases from leaf images using deep learning. Upload a leaf photo, select the crop type, and get an instant disease diagnosis along with treatment recommendations — available in English, Hindi, and Marathi.
+
+---
+
+## 📸 Demo
+
+| Dashboard | Disease Detection |
+|-----------|------------------|
+| Upload a leaf image | Get instant diagnosis + treatment |
+
+---
 
 ## ✨ Features
 
-- **🔬 Disease Prediction**: Advanced CNN-based plant disease detection using PyTorch
-- **🌦️ Weather Analysis**: Real-time weather from Open-Meteo API (no key needed)
-- **🌱 Crop Recommendation**: Intelligent crop suggestions based on soil and climate parameters
-- **🧪 Fertilizer Guide**: Organic and chemical fertilizer recommendations with NPK ratios
-- **📋 Government Schemes**: Information about agricultural subsidy schemes and benefits
-- **💰 Market Prices**: Real mandi prices from AGMARKET API with fallback to sample data
-- **🗣️ Multilingual Support**: Available in English, Hindi, and Marathi
-- **🎨 Dark/Light Theme**: User preferences with theme persistence
-- **📱 Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- 🔬 **Disease Detection** — CNN-based (EfficientNet B3) plant disease classification using PyTorch
+- 🌾 **5 Crops Supported** — Banana, Corn, Cotton, Rice, Wheat
+- 💊 **Treatment Recommendations** — Actionable treatment guide for each detected disease
+- 🗣️ **Multilingual UI** — Supports English, Hindi (`hi`), and Marathi (`mr`)
+- 🎨 **Dark / Light Theme** — Toggle with persistent local preference
+- 📱 **Responsive Design** — Works on desktop, tablet, and mobile
+- ⚡ **Fast & Lightweight** — Flask backend with clean Blueprint architecture
 
-## 🚀 Quick Start
+---
+
+## 🦠 Supported Crops & Diseases
+
+| Crop | Diseases Detected |
+|------|-------------------|
+| 🍌 **Banana** | Black Sigatoka, Bract Mosaic Virus, Insect Pest Disease, Moko Disease, Panama Disease, Yellow Sigatoka, Healthy |
+| 🌽 **Corn** | Blight, Common Rust, Gray Leaf Spot, Healthy |
+| 🌿 **Cotton** | Bacterial Blight, Curl Virus, Fusarium Wilt, Healthy |
+| 🍚 **Rice** | Bacterial Blight, Bacterial Leaf Blight, Brown Spot, Leaf Blast, Leaf Scald, Leaf Smut, Narrow Brown Spot, Healthy |
+| 🌾 **Wheat** | Black Point, Fusarium Foot Rot, Leaf Blight, Wheat Blast, Healthy |
+
+---
+
+## 🧠 Model Information
+
+| Property | Details |
+|----------|---------|
+| Architecture | EfficientNet B3 |
+| Pretrained Weights | ImageNet |
+| Input Size | 300 × 300 RGB |
+| Framework | PyTorch |
+| Output | Disease class + Confidence score |
+
+> **Note:** Model weights (`model/*.pt`) are not included in this repository due to size. Download separately and place them in the `model/<crop>/model.pt` path.
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- pip (Python package manager)
-- Virtual environment (recommended)
+- Python 3.8+
+- pip
 
 ### Installation
 
-1. **Clone or download the project**:
+**1. Clone the repository:**
 ```bash
-cd plant_disease_detector
+git clone https://github.com/Siddesh-Patil/Automated-Plant-Disease-Detection-via-Leaf-Images.git
+cd Automated-Plant-Disease-Detection-via-Leaf-Images
 ```
 
-2. **Create and activate virtual environment**:
+**2. Create and activate a virtual environment:**
 ```bash
 # Windows
 python -m venv venv
 venv\Scripts\activate
 
-# macOS/Linux
+# macOS / Linux
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-3. **Install dependencies**:
+**3. Install dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Configure environment variables**:
+**4. Set up environment variables:**
 ```bash
-# Copy the example configuration
-cp .env.example .env
+# Windows
+copy .env.example .env
 
-# Edit .env with your settings (optional):
-# - Add your OpenWeatherMap API key (free tier available)
-# - Set FLASK_ENV to 'development' or 'production'
+# macOS / Linux
+cp .env.example .env
 ```
 
-5. **Run the application**:
+**5. Add model weights:**
+
+Place your trained model files in:
+```
+model/
+├── banana/model.pt
+├── corn/model.pt
+├── cotton/model.pt
+├── rice/model.pt
+└── wheat/model.pt
+```
+
+**6. Run the application:**
 ```bash
 python app.py
 ```
 
-The application will start at `http://localhost:5000`
+Open your browser at: **`http://localhost:5000`**
+
+---
 
 ## 📁 Project Structure
 
 ```
-plant_disease_detector/
-├── app.py                          # Entry point
-├── app_new.py                      # Application factory
-├── config.py                       # Configuration settings
-├── requirements.txt                # Python dependencies
-├── .env.example                    # Environment template
-├── .gitignore                      # Git ignore rules
+Automated-Plant-Disease-Detection-via-Leaf-Images/
+│
+├── app.py                        # Entry point
+├── app_new.py                    # Application factory (create_app)
+├── config.py                     # Configuration settings
+├── requirements.txt              # Python dependencies
+├── .env.example                  # Environment variable template
+├── .gitignore                    # Git ignore rules
 │
 ├── api/
 │   ├── __init__.py
-│   └── routes.py                   # All Flask routes
+│   └── routes.py                 # All Flask routes (Blueprint)
 │
-├── services/                       # Business logic layer
+├── services/
 │   ├── __init__.py
-│   ├── translation_service.py      # Multilingual support
-│   ├── weather_service.py          # Weather API integration
-│   ├── crop_service.py             # Crop recommendations
-│   ├── fertilizer_service.py       # Fertilizer suggestions
-│   ├── schemes_service.py          # Government schemes
-│   └── market_service.py           # Market price data
+│   └── translation_service.py   # Multilingual support (EN / HI / MR)
 │
 ├── model/
-│   ├── predict.py                  # Disease prediction module
-│   ├── train.py                    # Model training script
-│   ├── banana/, corn/, cotton/, rice/, wheat/  # Trained models
-│   └── *.pt, *.pth files           # PyTorch model weights
+│   ├── predict.py                # Inference logic
+│   ├── train.py                  # Model training script
+│   └── <crop>/model.pt          # Trained weights (not in repo)
 │
-├── templates/                      # HTML templates
-│   ├── base.html                   # Master template
-│   ├── dashboard.html              # Main dashboard
-│   ├── predict.html                # Disease prediction page
-│   ├── weather.html                # Weather page
-│   ├── crop-recommendation.html    # Crop recommendation
-│   ├── fertilizer.html             # Fertilizer advice
-│   ├── schemes.html                # Government schemes
-│   ├── market.html                 # Market prices
-│   ├── 404.html                    # Error page
-│   └── 500.html                    # Server error page
+├── templates/
+│   ├── base.html                 # Master layout
+│   ├── dashboard.html            # Home/dashboard page
+│   ├── predict.html              # Upload & predict page
+│   ├── predict_result.html       # Results display
+│   ├── about.html                # About the project
+│   ├── 404.html                  # Not found error page
+│   └── 500.html                  # Server error page
 │
 ├── static/
 │   ├── css/
-│   │   ├── styles.css              # Original styles
-│   │   └── themes.css              # New theme system
-│   ├── js/
-│   │   ├── scripts.js              # Original scripts
-│   │   └── main.js                 # New application logic
-│   └── uploads/                    # User uploaded images
+│   │   ├── styles.css            # Main stylesheet
+│   │   └── themes.css            # Dark/light theme styles
+│   └── js/
+│       ├── main.js               # Core application logic
+│       └── scripts.js            # Additional scripts
 │
-├── database/
-│   └── (Future: SQLAlchemy models)
-│
-└── dataset/                        # Training datasets
-    ├── banana_split/
-    ├── corn_split/
-    ├── cotton_split/
-    ├── rice_split/
-    └── wheat_split/
+└── uploads/                      # Temporary image upload storage
 ```
+
+---
 
 ## 🔌 API Endpoints
 
-### Dashboard
-- `GET /` - Home page
-- `GET /dashboard` - Dashboard page
+### Pages
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | `/` | Home / Dashboard |
+| GET | `/dashboard` | Dashboard |
+| GET | `/about` | About page |
+| GET | `/predict` | Disease prediction form |
+| POST | `/predict` | Submit image for prediction |
 
-### Disease Prediction
-- `GET /predict` - Prediction form
-- `POST /predict` - Submit image for prediction
-- `GET /uploads/<filename>` - Retrieve uploaded image
+### REST API
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | `/api/health` | Health check |
+| GET | `/api/info` | App info & supported crops |
+| GET | `/api/translate?key=&lang=` | Single key translation |
+| GET | `/api/translations/<lang>` | All translations for a language |
+| GET | `/uploads/<filename>` | Serve uploaded image |
 
-### Weather
-- `GET /weather` - Weather form
-- `POST /weather` - Submit weather query
-- `GET /api/weather?city=<city>&lang=<lang>` - Weather API
+---
 
-### Crop Recommendation
-- `GET /crop-recommendation` - Recommendation form
-- `POST /crop-recommendation` - Submit parameters
-- `GET /api/crop-recommendation` - Crop recommendation API
+## 🌐 Multilingual Support
 
-### Fertilizer
-- `GET /fertilizer` - Fertilizer form
-- `POST /fertilizer` - Submit crop
-- `GET /api/fertilizer/<crop>?lang=<lang>` - Fertilizer API
+The app supports 3 languages selectable from the navbar or via URL:
 
-### Government Schemes
-- `GET /schemes` - Schemes page
-- `POST /schemes` - Search schemes
-- `GET /api/schemes` - Schemes API (with search/filter)
+| Language | Code | URL Example |
+|----------|------|-------------|
+| English | `en` | `/?lang=en` |
+| Hindi | `hi` | `/?lang=hi` |
+| Marathi | `mr` | `/?lang=mr` |
 
-### Market Prices
-- `GET /market` - Market prices page
-- `GET /api/market/prices` - Price data API
-- `GET /api/market/best-price/<crop>` - Best price for crop
+---
 
-### Translation
-- `GET /api/translate?key=<key>&lang=<lang>` - Single translation
-- `GET /api/translations/<lang>` - All translations
+## ⚙️ Environment Variables
 
-### Utility
-- `GET /api/health` - Health check
-- `GET /api/info` - Application info
-
-## 🌐 Supported Languages
-
-- **English** (en)
-- **Hindi** (hi)
-- **Marathi** (mr)
-
-Select language from the top navigation or use `?lang=en|hi|mr` parameter in URLs.
-
-## 🎨 Themes
-
-Supports both light and dark themes. Toggle with the theme button in the navbar. Your preference is saved locally.
-
-## 📊 Supported Crops & Diseases
-
-### Banana
-- Black Sigatoka
-- Bract Mosaic Virus
-- Insect Pest Disease
-- Moko Disease
-- Panama Disease
-- Yellow Sigatoka
-- Healthy
-
-### Corn
-- Blight
-- Common Rust
-- Gray Leaf Spot
-- Healthy
-
-### Cotton
-- Bacterial Blight
-- Curl Virus
-- Fusarium Wilt
-- Healthy
-
-### Rice
-- Bacterial Blight
-- Bacterial Leaf Blight
-- Brown Spot
-- Leaf Blast
-- Leaf Scald
-- Leaf Smut
-- Narrow Brown Spot
-- Healthy
-
-### Wheat
-- Black Point
-- Fusarium Foot Rot
-- Leaf Blight
-- Wheat Blast
-- Healthy
-
-## 🔐 Environment Variables
-
-See `.env.example` for configuration template:
+Create a `.env` file based on `.env.example`:
 
 ```env
 # Flask
 FLASK_ENV=development
 FLASK_PORT=5000
 DEBUG=True
-SECRET_KEY=your-secret-key
-
-# Weather API (optional, uses mock data if not provided)
-WEATHER_API_KEY=your_openweathermap_key
+SECRET_KEY=your-secret-key-here
 
 # Upload settings
 UPLOAD_FOLDER=uploads
-MAX_CONTENT_LENGTH=16777216  # 16MB
+MAX_CONTENT_LENGTH=16777216  # 16MB max upload size
 ```
-
-## 🛠️ Development
-
-### Running Tests
-
-```bash
-python test_routes.py
-```
-
-### Adding New Features
-
-1. Create service module in `services/` if data layer needed
-2. Add routes in `api/routes.py`
-3. Create template in `templates/` if UI needed
-4. Update `services/translation_service.py` for multilingual support
-
-### Adding New Crops
-
-1. Add model files to `model/<crop>/`
-2. Update `CATEGORY_LABELS` in `api/routes.py`
-3. Add disease translations in `services/translation_service.py`
-4. Update `services/crop_service.py` CROP_DATABASE
-5. Add to `services/fertilizer_service.py`
-
-## 📚 Model Information
-
-- **Architecture**: EfficientNet B3 with ImageNet pretrained weights
-- **Input Size**: 300x300 RGB images
-- **Output**: Crop + Disease classification with confidence scores
-- **Framework**: PyTorch
-- **Training Data**: Structured dataset with train/val splits per crop
-
-## 🚨 Troubleshooting
-
-### Port Already in Use
-```bash
-# Change port in .env or command line
-FLASK_PORT=5001 python app.py
-```
-
-### Module Not Found
-```bash
-# Ensure virtual environment is activated
-# Reinstall dependencies
-pip install -r requirements.txt
-```
-
-### Weather API Not Working
-- Weather API is optional and falls back to mock data
-- Get free API key: https://openweathermap.org/api
-- Add to `.env`: `WEATHER_API_KEY=your_key`
-
-### Static Files Not Loading
-- Ensure `UPLOAD_FOLDER=uploads` exists
-- Clear browser cache (Ctrl+F5)
-
-## 📝 License
-
-This project is for educational purposes.
-
-## 👥 Support
-
-For issues, questions, or suggestions, please refer to the GitHub repository or contact the development team.
-
-## 🎯 Future Enhancements
-
-- [ ] User authentication and histories
-- [ ] Database integration for predictions tracking
-- [ ] Real-time market price integration
-- [ ] Mobile app (native iOS/Android)
-- [ ] Advanced weather forecasting
-- [ ] Soil testing integration
-- [ ] Community forum
-- [ ] Expert consultation booking
 
 ---
 
-**Made with ❤️ for Indian Agriculture**
+## 🛠️ Troubleshooting
+
+**Port already in use:**
+```bash
+FLASK_PORT=5001 python app.py
+```
+
+**Module not found:**
+```bash
+# Make sure virtual environment is activated, then:
+pip install -r requirements.txt
+```
+
+**Model not found error:**
+- Ensure `model/<crop>/model.pt` exists for the selected crop
+- Model files are not included in the repo — add them manually
+
+**Uploaded image not showing:**
+- Make sure the `uploads/` directory exists (created automatically on first run)
+- Clear browser cache with `Ctrl + F5`
+
+---
+
+## 🔮 Future Enhancements
+
+- [ ] User authentication & prediction history
+- [ ] Database integration (SQLAlchemy)
+- [ ] Additional crops (Tomato, Potato, Soybean)
+- [ ] REST API with JWT authentication
+- [ ] Mobile app (React Native / Flutter)
+- [ ] Real-time camera capture support
+- [ ] Offline mode with model export (ONNX / TFLite)
+
+---
+
+## 🧰 Tech Stack
+
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-2.3-000000?logo=flask&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?logo=pytorch&logoColor=white)
+![EfficientNet](https://img.shields.io/badge/EfficientNet-B3-orange)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+
+---
+
+## 📝 License
+
+This project is for **educational purposes** as part of an academic submission.
+
+---
+
+## 👤 Author
+
+**Siddesh Patil**
+🔗 [GitHub](https://github.com/Siddesh-Patil)
+
+---
+
+*Made with ❤️ for Smart Agriculture*
