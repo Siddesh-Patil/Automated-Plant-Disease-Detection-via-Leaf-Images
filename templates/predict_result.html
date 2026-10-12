@@ -1,0 +1,32 @@
+<div class="result-section">
+    <h2>{{ trans.get('prediction_result', 'Prediction Result') }}</h2>
+    <div class="result-card">
+        <div class="result-item">
+            <label>{{ trans.get('crop', 'Crop:') }}</label>
+            <span class="result-value">{{ category }}</span>
+        </div>
+        <div class="result-item">
+            <label>{{ trans.get('disease', 'Disease:') }}</label>
+            <span class="result-value disease-name">{{ label }}</span>
+        </div>
+        <div class="result-item">
+            <label>{{ trans.get('confidence', 'Confidence:') }}</label>
+            <span class="result-value">{{ confidence }}%</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ confidence }}%"></div>
+            </div>
+        </div>
+        <div class="result-item full-width">
+            <label>{{ trans.get('treatment', 'Recommended Treatment:') }}</label>
+            <p class="treatment-text">{{ treatment }}</p>
+        </div>
+
+        {% if image_filename %}
+        <div class="result-item full-width">
+            <img src="{{ url_for('main.uploaded_file', filename=image_filename) }}" alt="Uploaded Image" class="result-image">
+        </div>
+        {% endif %}
+    </div>
+
+
+</div>

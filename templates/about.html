@@ -1,0 +1,480 @@
+{% extends "base.html" %}
+
+{% block title %}About - Automated Plant Disease Detection via Leaf Images{% endblock %}
+
+{% block content %}
+<div class="about-page">
+
+    <!-- Hero Banner -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <div class="about-badge">🌿 Research Project</div>
+            <h1>About This Project</h1>
+            <p>Automated Plant Disease Detection via Leaf Images leverages deep learning to help identify crop diseases early — enabling faster intervention and healthier yields.</p>
+        </div>
+    </section>
+
+    <div class="container about-body">
+
+        <!-- Project Overview -->
+        <section class="about-section">
+            <h2 class="section-heading">📌 Project Overview</h2>
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <div class="ov-icon">🎯</div>
+                    <h3>Objective</h3>
+                    <p>Build an AI-powered system capable of detecting diseases in crop leaves from images using convolutional neural networks (CNNs).</p>
+                </div>
+                <div class="overview-card">
+                    <div class="ov-icon">🌾</div>
+                    <h3>Supported Crops</h3>
+                    <p>The model covers <strong>5 major crops</strong>: Banana, Corn, Cotton, Rice, and Wheat — with <strong>28+ disease classes</strong> total.</p>
+                </div>
+                <div class="overview-card">
+                    <div class="ov-icon">🌍</div>
+                    <h3>Multilingual</h3>
+                    <p>Interface available in <strong>English</strong>, <strong>Hindi</strong>, and <strong>Marathi</strong> to reach a wider farming community.</p>
+                </div>
+                <div class="overview-card">
+                    <div class="ov-icon">💊</div>
+                    <h3>Treatment Advice</h3>
+                    <p>Beyond detection, the system provides tailored <strong>fungicide</strong> and <strong>fertilizer recommendations</strong> for each disease.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Flowchart -->
+        <section class="about-section">
+            <h2 class="section-heading">🔄 How It Works — System Flowchart</h2>
+            <div class="flowchart-wrapper">
+                <div class="flow-row">
+                    <div class="flow-node start">
+                        <div class="fn-icon">📷</div>
+                        <div class="fn-title">Input</div>
+                        <div class="fn-desc">User uploads a leaf image & selects crop type</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-node">
+                        <div class="fn-icon">🖼️</div>
+                        <div class="fn-title">Preprocessing</div>
+                        <div class="fn-desc">Image resized to 224×224, normalized for CNN input</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-node">
+                        <div class="fn-icon">🧠</div>
+                        <div class="fn-title">CNN Model</div>
+                        <div class="fn-desc">ResNet-based PyTorch model runs inference on the image</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-node end">
+                        <div class="fn-icon">📋</div>
+                        <div class="fn-title">Results</div>
+                        <div class="fn-desc">Disease label, confidence score & treatment returned</div>
+                    </div>
+                </div>
+
+                <!-- Detailed sub-flow -->
+                <div class="flow-detail-box">
+                    <div class="fd-step">
+                        <span class="fd-num">1</span>
+                        <div class="fd-content">
+                            <strong>Image Upload</strong>
+                            <p>User selects crop category (Banana / Corn / Cotton / Rice / Wheat) and uploads a JPG, PNG, or BMP leaf photo via drag-and-drop or file picker.</p>
+                        </div>
+                    </div>
+                    <div class="fd-step">
+                        <span class="fd-num">2</span>
+                        <div class="fd-content">
+                            <strong>Server-Side Preprocessing</strong>
+                            <p>Flask backend saves the image and passes it through torchvision transforms: resize → center crop → tensor normalization using ImageNet mean/std.</p>
+                        </div>
+                    </div>
+                    <div class="fd-step">
+                        <span class="fd-num">3</span>
+                        <div class="fd-content">
+                            <strong>Deep Learning Inference</strong>
+                            <p>A crop-specific ResNet model (trained and saved as <code>model.pt</code>) performs forward pass prediction and returns the class probability distribution via softmax.</p>
+                        </div>
+                    </div>
+                    <div class="fd-step">
+                        <span class="fd-num">4</span>
+                        <div class="fd-content">
+                            <strong>Post-Processing & Display</strong>
+                            <p>Top predicted class (disease label) and confidence score are extracted. Treatment guide and fertilizer recommendations are looked up from a curated knowledge base and rendered on-screen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="about-section">
+            <h2 class="section-heading">🛠️ Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-category">
+                    <h3>🔙 Backend</h3>
+                    <ul class="tech-list">
+                        <li><span class="tech-badge py">Python 3.10+</span> Core language</li>
+                        <li><span class="tech-badge flask">Flask</span> Web framework & routing</li>
+                        <li><span class="tech-badge torch">PyTorch</span> Deep learning framework</li>
+                        <li><span class="tech-badge tv">torchvision</span> Image transforms & pretrained models</li>
+                        <li><span class="tech-badge wz">Werkzeug</span> Secure file handling</li>
+                    </ul>
+                </div>
+                <div class="tech-category">
+                    <h3>🎨 Frontend</h3>
+                    <ul class="tech-list">
+                        <li><span class="tech-badge html">HTML5</span> Semantic page structure</li>
+                        <li><span class="tech-badge css">CSS3</span> Styling, themes, animations</li>
+                        <li><span class="tech-badge js">JavaScript</span> Dynamic interactions, AJAX</li>
+                        <li><span class="tech-badge jinja">Jinja2</span> Server-side templating</li>
+                    </ul>
+                </div>
+                <div class="tech-category">
+                    <h3>🤖 AI / ML</h3>
+                    <ul class="tech-list">
+                        <li><span class="tech-badge resnet">ResNet CNN</span> Transfer learning base</li>
+                        <li><span class="tech-badge softmax">Softmax</span> Multi-class classification</li>
+                        <li><span class="tech-badge aug">Data Augmentation</span> Improved generalization</li>
+                        <li><span class="tech-badge adam">Adam Optimizer</span> Model training</li>
+                    </ul>
+                </div>
+                <div class="tech-category">
+                    <h3>📦 Data & APIs</h3>
+                    <ul class="tech-list">
+                        <li><span class="tech-badge pil">Pillow</span> Image I/O and validation</li>
+                        <li><span class="tech-badge mymemory">MyMemory API</span> Free language translation</li>
+                        <li><span class="tech-badge json">JSON</span> Disease & treatment knowledge base</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Disease Coverage -->
+        <section class="about-section">
+            <h2 class="section-heading">🦠 Disease Coverage</h2>
+            <div class="disease-table-wrapper">
+                <table class="disease-table">
+                    <thead>
+                        <tr>
+                            <th>Crop</th>
+                            <th>Diseases Detected</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🍌 Banana</td>
+                            <td>Black Sigatoka, Bract Mosaic Virus, Insect Pest, Moko Disease, Panama Disease, Yellow Sigatoka, Healthy</td>
+                            <td><span class="count-badge">7</span></td>
+                        </tr>
+                        <tr>
+                            <td>🌽 Corn</td>
+                            <td>Blight, Common Rust, Gray Leaf Spot, Healthy</td>
+                            <td><span class="count-badge">4</span></td>
+                        </tr>
+                        <tr>
+                            <td>🌿 Cotton</td>
+                            <td>Bacterial Blight, Curl Virus, Fusarium Wilt, Healthy</td>
+                            <td><span class="count-badge">4</span></td>
+                        </tr>
+                        <tr>
+                            <td>🌾 Rice</td>
+                            <td>Bacterial Blight, Bacterial Leaf Blight, Brown Spot, Leaf Blast, Leaf Scald, Leaf Smut, Narrow Brown Spot, Healthy</td>
+                            <td><span class="count-badge">8</span></td>
+                        </tr>
+                        <tr>
+                            <td>🌿 Wheat</td>
+                            <td>Black Point, Fusarium Foot Rot, Leaf Blight, Wheat Blast, Healthy</td>
+                            <td><span class="count-badge">5</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="about-cta">
+            <div class="about-cta-inner">
+                <h2>Ready to Detect a Disease?</h2>
+                <p>Upload a leaf image and get instant AI-powered diagnosis with treatment recommendations.</p>
+                <a href="{{ url_for('main.predict_disease') }}" class="about-cta-btn">🔍 Try Disease Detection</a>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary: #27ae60;
+        --primary-dark: #1e8449;
+        --text-primary: #1a1a2e;
+        --text-secondary: #555;
+        --bg-light: #f0faf4;
+        --card-bg: #ffffff;
+        --border: #d5e8d4;
+    }
+    [data-theme="dark"] {
+        --text-primary: #e8f5e9;
+        --text-secondary: #aaa;
+        --bg-light: #121a14;
+        --card-bg: #1e2d1f;
+        --border: #2d4a2e;
+    }
+
+    .about-page { background: var(--bg-light); min-height: 100vh; }
+
+    /* Hero */
+    .about-hero {
+        background: linear-gradient(135deg, #1a5c35 0%, #27ae60 60%, #52d68a 100%);
+        color: white;
+        padding: 70px 20px;
+        text-align: center;
+    }
+    .about-hero-content { max-width: 700px; margin: 0 auto; }
+    .about-badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.2);
+        border: 1px solid rgba(255,255,255,0.4);
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+    }
+    .about-hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 14px; }
+    .about-hero p { font-size: 1.05rem; opacity: 0.92; line-height: 1.7; }
+
+    /* Body */
+    .about-body { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
+
+    .about-section { margin: 60px 0; }
+
+    .section-heading {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 30px;
+        padding-bottom: 12px;
+        border-bottom: 3px solid var(--primary);
+    }
+
+    /* Overview Grid */
+    .overview-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 20px;
+    }
+    .overview-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 28px 24px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .overview-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary);
+        box-shadow: 0 8px 24px rgba(39,174,96,0.15);
+    }
+    .ov-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .overview-card h3 { color: var(--text-primary); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .overview-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0; }
+
+    /* Flowchart */
+    .flowchart-wrapper { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 36px; }
+    .flow-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+    .flow-node {
+        background: var(--bg-light);
+        border: 2px solid var(--border);
+        border-radius: 14px;
+        padding: 20px 22px;
+        text-align: center;
+        min-width: 160px;
+        max-width: 190px;
+        flex: 1;
+        transition: border-color 0.2s;
+    }
+    .flow-node.start { border-color: #3498db; }
+    .flow-node.end { border-color: var(--primary); }
+    .fn-icon { font-size: 2rem; margin-bottom: 8px; }
+    .fn-title { font-weight: 800; color: var(--text-primary); font-size: 0.95rem; margin-bottom: 6px; }
+    .fn-desc { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.4; }
+    .flow-arrow {
+        font-size: 1.8rem;
+        color: var(--primary);
+        font-weight: 800;
+        padding: 0 8px;
+        flex-shrink: 0;
+    }
+
+    /* Detail steps */
+    .flow-detail-box {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        border-top: 1px solid var(--border);
+        padding-top: 28px;
+    }
+    .fd-step {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+    }
+    .fd-num {
+        background: var(--primary);
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+    .fd-content strong { color: var(--text-primary); font-size: 0.95rem; }
+    .fd-content p { color: var(--text-secondary); margin: 5px 0 0; font-size: 0.88rem; line-height: 1.6; }
+    .fd-content code {
+        background: rgba(39,174,96,0.12);
+        color: var(--primary);
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+    }
+
+    /* Tech Stack */
+    .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+    }
+    .tech-category {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 24px;
+    }
+    .tech-category h3 {
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: 800;
+        margin: 0 0 16px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--border);
+    }
+    .tech-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    .tech-list li { display: flex; align-items: center; gap: 10px; color: var(--text-secondary); font-size: 0.88rem; }
+
+    .tech-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        white-space: nowrap;
+        color: white;
+    }
+    .tech-badge.py { background: #3572A5; }
+    .tech-badge.flask { background: #000; }
+    .tech-badge.torch { background: #EE4C2C; }
+    .tech-badge.tv { background: #EE4C2C; }
+    .tech-badge.wz { background: #555; }
+    .tech-badge.html { background: #e34c26; }
+    .tech-badge.css { background: #264de4; }
+    .tech-badge.js { background: #f0db4f; color: #333; }
+    .tech-badge.jinja { background: #b41717; }
+    .tech-badge.resnet { background: #9b59b6; }
+    .tech-badge.softmax { background: #1abc9c; }
+    .tech-badge.aug { background: #e67e22; }
+    .tech-badge.adam { background: #2980b9; }
+    .tech-badge.pil { background: #27ae60; }
+    .tech-badge.mymemory { background: #16a085; }
+    .tech-badge.json { background: #7f8c8d; }
+
+    /* Disease Table */
+    .disease-table-wrapper { overflow-x: auto; }
+    .disease-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card-bg);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .disease-table thead tr { background: linear-gradient(135deg, #1a5c35, #27ae60); color: white; }
+    .disease-table th {
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+    .disease-table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        vertical-align: top;
+    }
+    .disease-table td:first-child { color: var(--text-primary); font-weight: 600; white-space: nowrap; }
+    .disease-table tr:last-child td { border-bottom: none; }
+    .disease-table tbody tr:hover { background: var(--bg-light); }
+    .count-badge {
+        background: var(--primary);
+        color: white;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    /* CTA */
+    .about-cta { margin: 60px 0 0; }
+    .about-cta-inner {
+        background: linear-gradient(135deg, #1a5c35, #27ae60);
+        color: white;
+        border-radius: 20px;
+        padding: 50px 40px;
+        text-align: center;
+    }
+    .about-cta-inner h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
+    .about-cta-inner p { font-size: 1rem; opacity: 0.9; margin-bottom: 26px; }
+    .about-cta-btn {
+        display: inline-block;
+        background: white;
+        color: #1a5c35;
+        padding: 14px 32px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .about-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .about-hero h1 { font-size: 1.6rem; }
+        .flow-row { gap: 10px; }
+        .flow-arrow { font-size: 1.2rem; }
+        .flow-node { min-width: 120px; max-width: 100%; padding: 14px; }
+        .about-cta-inner { padding: 36px 20px; }
+    }
+    @media (max-width: 600px) {
+        .flow-row { flex-direction: column; align-items: center; }
+        .flow-arrow { transform: rotate(90deg); }
+    }
+</style>
+{% endblock %}

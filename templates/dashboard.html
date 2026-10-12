@@ -1,0 +1,643 @@
+{% extends "base.html" %}
+
+{% block title %}Automated Plant Disease Detection via Leaf Images{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">🌿 AI-Powered Research Tool</div>
+            <h1 class="hero-title">Automated Plant Disease Detection via Leaf Images</h1>
+            <p class="hero-subtitle">Upload a leaf image and let our deep learning model instantly identify the disease affecting your crop — with treatment recommendations included.</p>
+            <div class="hero-cta">
+                <a href="{{ url_for('main.predict_disease') }}" class="hero-btn primary">
+                    🔍 Detect Disease Now
+                </a>
+                <a href="{{ url_for('main.about') }}" class="hero-btn secondary">
+                    📖 Learn How It Works
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="scan-animation">
+                <div class="leaf-icon">🍃</div>
+                <div class="scan-line"></div>
+                <div class="result-dots">
+                    <span class="dot dot-1"></span>
+                    <span class="dot dot-2"></span>
+                    <span class="dot dot-3"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-row">
+                <div class="stat-item">
+                    <span class="stat-num">28+</span>
+                    <span class="stat-lbl">{{ trans.get('diseases_detected', 'Diseases Detected') }}</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">5</span>
+                    <span class="stat-lbl">{{ trans.get('crops_supported', 'Crops Supported') }}</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">3</span>
+                    <span class="stat-lbl">{{ trans.get('languages', 'Languages') }}</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">99%</span>
+                    <span class="stat-lbl">{{ trans.get('accuracy', 'Model Accuracy') }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disease Prediction Feature -->
+    <section class="feature-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ trans.get('predict_disease', 'Disease Prediction') }}</h2>
+                <p class="section-desc">Advanced convolutional neural network model trained on thousands of leaf images to accurately identify plant diseases.</p>
+            </div>
+
+            <div class="feature-showcase">
+                <!-- Left: Info cards -->
+                <div class="feature-info">
+                    <div class="info-card">
+                        <div class="info-icon">🌾</div>
+                        <div class="info-text">
+                            <h4>Supported Crops</h4>
+                            <p>Banana, Corn, Cotton, Rice, Wheat</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🧠</div>
+                        <div class="info-text">
+                            <h4>Deep Learning Model</h4>
+                            <p>PyTorch-based CNN with high accuracy across disease categories</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">💊</div>
+                        <div class="info-text">
+                            <h4>Treatment Recommendations</h4>
+                            <p>Get specific fungicide and management advice for each detected disease</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🌍</div>
+                        <div class="info-text">
+                            <h4>Multilingual Support</h4>
+                            <p>Available in English, Hindi, and Marathi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: CTA card -->
+                <div class="predict-cta-card">
+                    <div class="cta-card-icon">🔬</div>
+                    <h3>Analyze Your Crop Leaf</h3>
+                    <p>Simply upload a clear photo of the affected leaf. Our model will analyze it and provide:</p>
+                    <ul class="cta-list">
+                        <li>✅ Disease identification with confidence score</li>
+                        <li>✅ Treatment & fungicide recommendations</li>
+                        <li>✅ Fertilizer suggestions based on disease</li>
+                    </ul>
+                    <a href="{{ url_for('main.predict_disease') }}" class="cta-main-btn">
+                        Upload Leaf Image →
+                    </a>
+                    <p class="supported-formats">Supported formats: JPG, PNG, BMP</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">{{ trans.get('how_it_works', 'How It Works') }}</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">🌱</div>
+                    <h3>Select Crop</h3>
+                    <p>Choose the crop type from our supported list</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">📷</div>
+                    <h3>Upload Image</h3>
+                    <p>Take or upload a clear photo of the affected leaf</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">🤖</div>
+                    <h3>AI Analysis</h3>
+                    <p>Our deep learning model analyzes the leaf image</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">📋</div>
+                    <h3>Get Results</h3>
+                    <p>Receive disease diagnosis and treatment plan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    :root {
+        --primary: #27ae60;
+        --primary-dark: #1e8449;
+        --primary-light: #a9dfbf;
+        --accent: #2ecc71;
+        --text-primary: #1a1a2e;
+        --text-secondary: #555;
+        --bg-light: #f0faf4;
+        --card-bg: #ffffff;
+        --border: #d5e8d4;
+    }
+
+    [data-theme="dark"] {
+        --text-primary: #e8f5e9;
+        --text-secondary: #aaa;
+        --bg-light: #121a14;
+        --card-bg: #1e2d1f;
+        --border: #2d4a2e;
+    }
+
+    .dashboard { padding: 0; }
+
+    /* Hero */
+    .hero-section {
+        background: linear-gradient(135deg, #1a5c35 0%, #27ae60 60%, #52d68a 100%);
+        color: white;
+        padding: 80px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 60px;
+        min-height: 480px;
+        flex-wrap: wrap;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-content {
+        max-width: 600px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.2);
+        border: 1px solid rgba(255,255,255,0.4);
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+        backdrop-filter: blur(4px);
+    }
+
+    .hero-title {
+        font-size: 2.4rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 18px;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.92;
+        line-height: 1.7;
+        margin-bottom: 30px;
+    }
+
+    .hero-cta {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+
+    .hero-btn {
+        padding: 13px 28px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .hero-btn.primary {
+        background: white;
+        color: #1a5c35;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .hero-btn.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .hero-btn.secondary {
+        background: rgba(255,255,255,0.15);
+        color: white;
+        border: 2px solid rgba(255,255,255,0.5);
+        backdrop-filter: blur(4px);
+    }
+
+    .hero-btn.secondary:hover {
+        background: rgba(255,255,255,0.25);
+    }
+
+    /* Scan animation */
+    .hero-visual {
+        position: relative;
+        z-index: 1;
+    }
+
+    .scan-animation {
+        width: 200px;
+        height: 200px;
+        background: rgba(255,255,255,0.1);
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+
+    .leaf-icon {
+        font-size: 5rem;
+        animation: pulse-leaf 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-leaf {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    .scan-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #2ecc71, transparent);
+        animation: scan 2s linear infinite;
+        box-shadow: 0 0 10px #2ecc71;
+    }
+
+    @keyframes scan {
+        0% { top: 0%; }
+        100% { top: 100%; }
+    }
+
+    .result-dots {
+        display: flex;
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.5);
+    }
+
+    .dot-1 { animation: blink 1.5s ease-in-out infinite 0s; }
+    .dot-2 { animation: blink 1.5s ease-in-out infinite 0.5s; }
+    .dot-3 { animation: blink 1.5s ease-in-out infinite 1s; }
+
+    @keyframes blink {
+        0%, 100% { opacity: 0.3; background: rgba(255,255,255,0.3); }
+        50% { opacity: 1; background: #2ecc71; box-shadow: 0 0 6px #2ecc71; }
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+        background: var(--card-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 28px 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .stats-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        flex-wrap: wrap;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 40px;
+    }
+
+    .stat-num {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary);
+    }
+
+    .stat-lbl {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 4px;
+    }
+
+    .stat-divider {
+        width: 1px;
+        height: 50px;
+        background: var(--border);
+    }
+
+    /* Feature Section */
+    .feature-section {
+        padding: 70px 20px;
+        background: var(--bg-light);
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+    }
+
+    .section-desc {
+        color: var(--text-secondary);
+        font-size: 1.05rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.7;
+    }
+
+    .feature-showcase {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        max-width: 1100px;
+        margin: 0 auto;
+        align-items: start;
+    }
+
+    .feature-info {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .info-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .info-card:hover {
+        transform: translateX(4px);
+        border-color: var(--primary);
+        box-shadow: 0 4px 16px rgba(39,174,96,0.12);
+    }
+
+    .info-icon {
+        font-size: 2rem;
+        flex-shrink: 0;
+    }
+
+    .info-text h4 {
+        color: var(--text-primary);
+        margin: 0 0 5px;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .info-text p {
+        color: var(--text-secondary);
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    /* Predict CTA Card */
+    .predict-cta-card {
+        background: linear-gradient(145deg, #1a5c35, #27ae60);
+        color: white;
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(39,174,96,0.3);
+        position: sticky;
+        top: 90px;
+    }
+
+    .cta-card-icon {
+        font-size: 3.5rem;
+        margin-bottom: 16px;
+        display: block;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+
+    .predict-cta-card h3 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .predict-cta-card > p {
+        opacity: 0.9;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .cta-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 28px;
+        text-align: left;
+    }
+
+    .cta-list li {
+        padding: 8px 0;
+        font-size: 0.9rem;
+        opacity: 0.95;
+        border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .cta-list li:last-child { border-bottom: none; }
+
+    .cta-main-btn {
+        display: block;
+        background: white;
+        color: #1a5c35;
+        padding: 14px 28px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        margin-bottom: 14px;
+    }
+
+    .cta-main-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .supported-formats {
+        opacity: 0.7;
+        font-size: 0.8rem;
+        margin: 0;
+    }
+
+    /* How it works */
+    .how-it-works {
+        padding: 70px 20px;
+        background: var(--card-bg);
+    }
+
+    .steps-grid {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        max-width: 1100px;
+        margin: 40px auto 0;
+        flex-wrap: wrap;
+    }
+
+    .step-card {
+        background: var(--bg-light);
+        border: 1px solid var(--border);
+        padding: 30px 24px;
+        border-radius: 16px;
+        text-align: center;
+        flex: 1;
+        min-width: 180px;
+        max-width: 220px;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .step-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 6px 20px rgba(39,174,96,0.15);
+        transform: translateY(-4px);
+    }
+
+    .step-number {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--primary);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        font-size: 0.85rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .step-icon {
+        font-size: 2.5rem;
+        margin: 10px 0 14px;
+    }
+
+    .step-card h3 {
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .step-card p {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .step-arrow {
+        font-size: 1.5rem;
+        color: var(--primary);
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .hero-section { padding: 60px 20px; gap: 30px; }
+        .hero-title { font-size: 1.8rem; }
+        .hero-visual { display: none; }
+        .feature-showcase { grid-template-columns: 1fr; }
+        .predict-cta-card { position: static; }
+        .stat-item { padding: 0 20px; }
+        .steps-grid { gap: 20px; }
+        .step-arrow { display: none; }
+        .step-card { max-width: 180px; }
+    }
+
+    @media (max-width: 600px) {
+        .stats-row { gap: 10px; }
+        .stat-divider { display: none; }
+        .stat-item { padding: 10px 15px; }
+        .steps-grid { flex-direction: column; align-items: center; }
+        .step-card { max-width: 100%; width: 100%; }
+    }
+</style>
+{% endblock %}
